@@ -1,0 +1,119 @@
+<HTML>
+  <HEAD>
+    <TITLE> My Chess Board </TITLE>
+	
+	<link rel="stylesheet" href="main3.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="Chess_js1.js">	</script>	
+  </HEAD>
+
+  <BODY>
+	<!--<img src="ChessImgs/opsq.png" id="opimg">-->
+	<div class="cboard">
+	<img src="ChessImgs/chessboard-js_1.png">
+	</div>
+	<div id="opsq"></div>
+	<div class="csquare">
+		<img src="ChessImgs/Chess_rlt60.png" id="rook_l0" class="a1" loc="70" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_70" class="a1" loc="70" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_plt60.png" id="pawn_l0" class="a2" loc="60" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_60" class="a2" loc="60" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_50" class="a3" loc="50" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_40" class="a4" loc="40" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_30" class="a5" loc="30" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_20" class="a6" loc="20" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d0" class="a7" loc="10" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_10" class="a7" loc="10" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_rdt60.png" id="rook_d0" class="a8" loc="00" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_00" class="a8" loc="00" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_nlt60.png" id="knight_l0" class="b1" loc="71" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_71" class="b1" loc="71" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_plt60.png" id="pawn_l1" class="b2" loc="61" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_61" class="b2" loc="61" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_51" class="b3" loc="51" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_41" class="b4" loc="41" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_31" class="b5" loc="31" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_21" class="b6" loc="21" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d1" class="b7" loc="11" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_11" class="b7" loc="11" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_ndt60.png" id="knight_d0" class="b8" loc="01" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_01" class="b8" loc="01" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_blt60.png" id="bishop_l0" class="c1" loc="72" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_72" class="c1" loc="72" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_plt60.png" id="pawn_l2" class="c2" loc="62" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_62" class="c2" loc="62" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_52" class="c3" loc="52" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_42" class="c4" loc="42" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_32" class="c5" loc="32" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_22" class="c6" loc="22" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d2" class="c7" loc="12" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_12" class="c7" loc="12" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_bdt60.png" id="bishop_d0" class="c8" loc="02" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_02" class="c8" loc="02" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_qlt60.png" id="queen_l0" class="d1" loc="73" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_73" class="d1" loc="73" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_plt60.png" id="pawn_l3" class="d2" loc="63" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_63" class="d2" loc="63" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_53" class="d3" loc="53" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_43" class="d4" loc="43" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_33" class="d5" loc="33" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_23" class="d6" loc="23" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_pdt60.png" id="pawn_d3" class="d7" loc="13" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_13" class="d7" loc="13" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_qdt60.png" id="queen_d0" class="d8" loc="03" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_03" class="d8" loc="03" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_klt60.png" id="king_l0" class="e1" loc="74" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_74" class="e1" loc="74" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_plt60.png" id="pawn_l4" class="e2" loc="64" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_64" class="e2" loc="64" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_54" class="e3" loc="54" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_44" class="e4" loc="44" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_34" class="e5" loc="34" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_24" class="e6" loc="24" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d4" class="e7" loc="14" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_14" class="e7" loc="14" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_kdt60.png" id="king_d0" class="e8" loc="04" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_04" class="e8" loc="04" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_blt60.png" id="bishop_l1" class="f1" loc="75" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_75" class="f1" loc="75" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_plt60.png" id="pawn_l5" class="f2" loc="65" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_65" class="f2" loc="65" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/opsq.png" id="opsq_55" class="f3" loc="55" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_45" class="f4" loc="45" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_35" class="f5" loc="35" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_25" class="f6" loc="25" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d5" class="f7" loc="15" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_15" class="f7" loc="15" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_bdt60.png" id="bishop_d1" class="f8" loc="05" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_05" class="f8" loc="05" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_nlt60.png" id="knight_l1" class="g1" loc="76" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_76" class="g1" loc="76" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_plt60.png" id="pawn_l6" class="g2" loc="66" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_66" class="g2" loc="66" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_56" class="g3" loc="56" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_46" class="g4" loc="46" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_36" class="g5" loc="36" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_26" class="g6" loc="26" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_pdt60.png" id="pawn_d6" class="g7" loc="16" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_16" class="g7" loc="16" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_ndt60.png" id="knight_d1" class="g8" loc="06" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_06" class="g8" loc="06" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_rlt60.png" id="rook_l1" class="h1" loc="77" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_77" class="h1" loc="77" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/Chess_plt60.png" id="pawn_l7" class="h2" loc="67" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_67" class="h2" loc="67" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	    <img src="ChessImgs/opsq.png" id="opsq_57" class="h3" loc="57" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_47" class="h4" loc="47" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;"  onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_37" class="h5" loc="37" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_27" class="h6" loc="27" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_pdt60.png" id="pawn_d7" class="h7"  loc="17" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_17" class="h7" loc="17" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+		<img src="ChessImgs/Chess_rdt60.png" id="rook_d1" class="h8" loc="07" moved="no" style="cursor: pointer;" onclick="piece_1click(this)">
+		<img src="ChessImgs/opsq.png" id="opsq_07" class="h8" loc="07" style="visibility: hidden; opacity: .5; z-index: 0; cursor: pointer;" onclick="hSquare_click(this)">
+	</div>
+	  <script src="Chess_js2.js"></script>
+
+	  
+
+  </BODY>
+</HTML>

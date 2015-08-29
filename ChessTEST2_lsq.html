@@ -1,0 +1,969 @@
+<HTML>
+  <HEAD>
+    <TITLE> My Chess Board </TITLE>
+	<link rel="stylesheet" href="main3.css">
+	<script> var numSldPcs = 0;
+			 var sld = [];
+			 var sqList;
+			 var bpos = [['rook_d0','knight_d0','bishop_d0','queen_d0','king_d0','bishop_d1','knight_d1','rook_d1'],
+						 ['pawn_d0','pawn_d1','pawn_d2','pawn_d3','pawn_d4','pawn_d5','pawn_d6','pawn_d7'],
+						 [0,0,0,0,0,0,0,0],
+						 [0,0,0,0,0,0,0,0],
+						 [0,0,0,0,0,0,0,0],
+						 [0,0,0,0,0,0,0,0],
+						 ['pawn_l0','pawn_l1','pawn_l2','pawn_l3','pawn_l4','pawn_l5','pawn_l6','pawn_l7'],
+						 ['rook_l0','knight_l0','bishop_l0','queen_l0','king_l0','bishop_l1','knight_l1','rook_l1']];
+			 
+			 function legalSquares(elmnt){
+				var cov_sqList=[];
+				var leg_sqList=[];
+				var elmnt_loc=elmnt.getAttribute("loc");
+				var elmnt_type=elmnt.getAttribute("id").substring(0,4);
+				var elmnt_color=elmnt.getAttribute("id").charAt(elmnt.getAttribute("id").length-1);
+				
+				var el_vert = parseFloat(elmnt_loc[0]);
+				var el_horz = parseFloat(elmnt_loc[1]);
+				
+	
+				
+				if (elmnt_type == "pawn"){																										//PAWN
+				  if (elmnt_color=='l'){																									//WHITE PAWN
+					cov_sqList.push((el_vert-1).toString()+(el_horz-1).toString());
+				    cov_sqList.push((el_vert-1).toString()+(el_horz+1).toString());
+					if (((el_vert-1)>=0) && ((bpos[el_vert-1][el_horz])==0))																		//Check square in front of pawn is on the board and empty
+						leg_sqList.push((el_vert-1).toString() + el_horz.toString());
+					if ((el_vert==6) && ((bpos[el_vert-1][el_horz])==0) && ((bpos[el_vert-2][el_horz])==0))											//Check if pawn can still move two squares up.
+						leg_sqList.push((el_vert-2).toString() + el_horz.toString());
+					if (el_horz>0){
+						if (((el_vert-1)>=0) && ((bpos[el_vert-1][el_horz-1])!=0) && (((bpos[el_vert-1][el_horz-1]).indexOf('d'))>0))   			//Check if the pawn can take left
+							leg_sqList.push((el_vert-1).toString()+(el_horz-1).toString());
+						}
+					if (el_horz<7){
+						if (((el_vert-1)>=0) && ((bpos[el_vert-1][el_horz+1])!=0) && (((bpos[el_vert-1][el_horz+1]).indexOf('d'))>0))   			//Check if the pawn can take right.
+							leg_sqList.push((el_vert-1).toString()+(el_horz+1).toString());
+						}
+					}
+				  else{																															//BLACK PAWN
+				    cov_sqList.push((el_vert+1).toString()+(el_horz-1).toString());
+				    cov_sqList.push((el_vert+1).toString()+(el_horz+1).toString());
+					if (((el_vert+1)<=7) && ((bpos[el_vert+1][el_horz])==0))																		//Check square in front of pawn is on the board and empty.
+						leg_sqList.push((el_vert+1).toString() + el_horz.toString());
+					if ((el_vert==1) && ((bpos[el_vert+1][el_horz])==0) && ((bpos[el_vert+2][el_horz])==0))											//Check if pawn can still move two squares up.
+						leg_sqList.push((el_vert+2).toString() + el_horz.toString());
+					if (el_horz>0){
+						if (((el_vert+1)<=7) && ((bpos[el_vert+1][el_horz-1])!=0) && (((bpos[el_vert+1][el_horz-1]).indexOf('l'))>0))   			//Check if the pawn can take right.
+							leg_sqList.push((el_vert+1).toString()+(el_horz-1).toString());
+						}
+					if (el_horz<7){
+						if (((el_vert+1)<=7) && ((bpos[el_vert+1][el_horz+1])!=0) && (((bpos[el_vert+1][el_horz+1]).indexOf('l'))>0))  				//Check if the pawn can take left.
+							leg_sqList.push((el_vert-1).toString()+(el_horz+1).toString());
+						}
+					}
+				//alert(leg_sqList);
+				//HAVE YET TO ACCOUNT FOR... En Passant, Pawn promotion
+				}
+				
+				
+				
+					
+				else if (elmnt_type == "rook"){																						//ROOK
+
+					var lastStopN=false;
+					var lastStopE=false;
+					var lastStopS=false;
+					var lastStopW=false;
+					
+					for(var i=1;(!(lastStopN) || !(lastStopE) || !(lastStopS) || !(lastStopW));i++){
+						if ((el_horz+i)>7)
+							lastStopE=true;
+						if ((el_vert-i)<0)
+							lastStopN=true;
+						if ((el_vert+i)>7)
+							lastStopS=true;
+						if ((el_horz-i)<0)
+							lastStopW=true;
+							
+						
+						if(!(lastStopN)){																											//Northward
+							if((bpos[el_vert-i][el_horz])==0){
+								leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz).toString());
+								if ((bpos[el_vert-i][el_horz]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White rook runs into one of its own pieces
+										lastStopN=true;
+									else{																											//Black rook has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+										lastStopN=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black rook runs into one of its own pieces
+										lastStopN=true;
+									else{																											//White rook has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+										lastStopN=true;
+									}
+								
+								
+								}
+							}
+						}
+						
+						if(!(lastStopE)){																											//Eastward
+							if((bpos[el_vert][el_horz+i])==0){
+								leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+								cov_sqList.push(el_vert.toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push(el_vert.toString()+(el_horz+i).toString());
+								if ((bpos[el_vert][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White rook runs into one of its own pieces
+										lastStopE=true;
+									else{																											//Black rook has option to take white piece
+										leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+										lastStopE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black rook runs into one of its own pieces
+										lastStopE=true;
+									else{																											//White rook has option to take black piece
+										leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+										lastStopE=true;
+									}
+								
+								
+								}
+							}
+						}
+					
+						if(!(lastStopS)){																											//Southward
+							if((bpos[el_vert+i][el_horz])==0){
+								leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz).toString());
+								if ((bpos[el_vert+i][el_horz]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White rook runs into one of its own pieces
+										lastStopS=true;
+									else{																											//Black rook has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+										lastStopS=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black rook runs into one of its own pieces
+										lastStopS=true;
+									else{																											//White rook has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+										lastStopS=true;
+									}
+								}
+							}
+						}
+						
+						if(!(lastStopW)){																											//Westward
+							if((bpos[el_vert][el_horz-i])==0){
+								leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+								cov_sqList.push(el_vert.toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push(el_vert.toString()+(el_horz-i).toString());
+								if ((bpos[el_vert][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White rook runs into one of its own pieces
+										lastStopW=true;
+									else{																											//Black rook has option to take white piece
+										leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+										lastStopW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black rook runs into one of its own pieces
+										lastStopW=true;
+									else{																											//White rook has option to take black piece
+										leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+										lastStopW=true;
+									}
+								
+								
+								}
+							}
+						}
+					}
+					//alert(leg_sqList);
+					
+				}
+				   
+				else if (elmnt_type == "knig"){																									//KNIGHT
+
+					var ny;
+					var nx;
+					
+					for(i=0;i<8;i++){
+						if (i==0){
+							ny = el_vert-1;
+							nx = el_horz+2;
+							}
+						else if (i==1){
+							ny = el_vert+1;
+							nx = el_horz+2;
+							}
+						else if (i==2){
+							ny = el_vert-2;
+							nx = el_horz+1;
+							}
+						else if (i==3){
+							ny = el_vert-2;
+							nx = el_horz-1;
+							}
+						else if (i==4){
+							ny = el_vert-1;
+							nx = el_horz-2;
+							}
+						else if (i==5){
+							ny = el_vert+1;
+							nx = el_horz-2;
+							}
+						else if (i==6){
+							ny = el_vert+2;
+							nx = el_horz-1;
+							}
+						else if (i==7){
+							ny = el_vert+2;
+							nx = el_horz+1;
+							}
+						if (!((ny<0) || (ny>7) || (nx<0) || (nx>7))){
+							cov_sqList.push(ny.toString() + nx.toString());
+							if ((bpos[ny][nx])==0)
+								leg_sqList.push(ny.toString() + nx.toString());
+							else{
+								if ((bpos[ny][nx]).indexOf('l')>0){
+									if (elmnt_color=='d')
+										leg_sqList.push(ny.toString() + nx.toString());
+									}
+								else{
+									if (elmnt_color=='l')
+										leg_sqList.push(ny.toString() + nx.toString());
+									}
+								
+							}
+						}
+					}
+					//alert(leg_sqList);
+				}
+				
+				
+				else if (elmnt_type == "bish"){
+				
+					var lastStopNE=false;
+					var lastStopSE=false;
+					var lastStopSW=false;
+					var lastStopNW=false;
+					
+					for(var i=1;(!(lastStopNE) || !(lastStopSE) || !(lastStopSW) || !(lastStopNW));i++){
+						if (((el_horz+i)>7) || ((el_vert-i)<0))
+							lastStopNE=true;
+						if (((el_horz+i)>7) || ((el_vert+i)>7))
+							lastStopSE=true;
+						if (((el_horz-i)<0) || ((el_vert+i)>7))
+							lastStopSW=true;
+						if (((el_horz-i)<0) || ((el_vert-i)<0))
+							lastStopNW=true;
+							
+						
+						if(!(lastStopNE)){																											//NorthEast-ward
+							if((bpos[el_vert-i][el_horz+i])==0){
+								leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz+i).toString());
+								if ((bpos[el_vert-i][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White bishop runs into one of its own pieces
+										lastStopNE=true;
+									else{																											//Black bishop has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+										lastStopNE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black bishop runs into one of its own pieces
+										lastStopNE=true;
+									else{																											//White bishop has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+										lastStopNE=true;
+									}
+								
+								
+								}
+							}
+						}	
+						
+						if(!(lastStopSE)){																											//SouthEast-ward
+							if((bpos[el_vert+i][el_horz+i])==0){
+								leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz+i).toString());
+								if ((bpos[el_vert+i][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White bishop runs into one of its own pieces
+										lastStopSE=true;
+									else{																											//Black bishop has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+										lastStopSE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black bishop runs into one of its own pieces
+										lastStopSE=true;
+									else{																											//White bishop has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+										lastStopSE=true;
+									}
+								
+								
+								}
+							}
+						}
+					
+						if(!(lastStopSW)){																											//SouthWest-ward
+							if((bpos[el_vert+i][el_horz-i])==0){
+								leg_sqList.push((el_vert+i).toString()+(el_horz-i).toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz-i).toString());
+								if ((bpos[el_vert+i][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White bishop runs into one of its own pieces
+										lastStopSW=true;
+									else{																											//Black bishop has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz-i).toString());
+										lastStopSW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black bishop runs into one of its own pieces
+										lastStopSW=true;
+									else{																											//White bishop has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz-i).toString());
+										lastStopSW=true;
+									}
+								
+								
+								}
+							}
+						}
+						
+						if(!(lastStopNW)){																											//NorthWest-ward
+							if((bpos[el_vert-i][el_horz-i])==0){
+								leg_sqList.push((el_vert-i).toString()+(el_horz-i).toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz-i).toString());
+								if ((bpos[el_vert-i][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White bishop runs into one of its own pieces
+										lastStopNW=true;
+									else{																											//Black bishop has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz-i).toString());
+										lastStopNW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black bishop runs into one of its own pieces
+										lastStopNW=true;
+									else{																											//White bishop has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz-i).toString());
+										lastStopNW=true;
+									}
+								
+								
+								}
+							}
+						}
+					}
+				
+				//alert(leg_sqList);
+				}
+				
+				
+				else if (elmnt_type == "quee"){
+				
+					var lastStopN=false;
+					var lastStopE=false;
+					var lastStopS=false;
+					var lastStopW=false;
+					
+					var lastStopNE=false;
+					var lastStopSE=false;
+					var lastStopSW=false;
+					var lastStopNW=false;
+					
+					for(var i=1;(!(lastStopN) || !(lastStopE) || !(lastStopS) || !(lastStopW)   ||   !(lastStopNE) || !(lastStopSE) || !(lastStopSW) || !(lastStopNW));i++){
+						
+						if ((el_horz+i)>7)
+							lastStopE=true;
+						if ((el_vert-i)<0)
+							lastStopN=true;
+						if ((el_vert+i)>7)
+							lastStopS=true;
+						if ((el_horz-i)<0)
+							lastStopW=true;
+						
+						if (((el_horz+i)>7) || ((el_vert-i)<0))
+							lastStopNE=true;
+						if (((el_horz+i)>7) || ((el_vert+i)>7))
+							lastStopSE=true;
+						if (((el_horz-i)<0) || ((el_vert+i)>7))
+							lastStopSW=true;
+						if (((el_horz-i)<0) || ((el_vert-i)<0))
+							lastStopNW=true;
+							
+						if(!(lastStopN)){																											//Northward
+							if((bpos[el_vert-i][el_horz])==0){
+								leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz).toString());
+								if ((bpos[el_vert-i][el_horz]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopN=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+										lastStopN=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopN=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + el_horz.toString());
+										lastStopN=true;
+									}
+								
+								
+								}
+							}
+						}
+						
+						if(!(lastStopE)){																											//Eastward
+							if((bpos[el_vert][el_horz+i])==0){
+								leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+								cov_sqList.push(el_vert.toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push(el_vert.toString()+(el_horz+i).toString());
+								if ((bpos[el_vert][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopE=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+										lastStopE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopE=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push(el_vert.toString() + (el_horz+i).toString());
+										lastStopE=true;
+									}
+								
+								
+								}
+							}
+						}
+					
+						if(!(lastStopS)){																											//Southward
+							if((bpos[el_vert+i][el_horz])==0){
+								leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz).toString());
+								if ((bpos[el_vert+i][el_horz]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopS=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+										lastStopS=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopS=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + el_horz.toString());
+										lastStopS=true;
+									}
+								}
+							}
+						}
+						
+						if(!(lastStopW)){																											//Westward
+							if((bpos[el_vert][el_horz-i])==0){
+								leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+								cov_sqList.push(el_vert.toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push(el_vert.toString()+(el_horz-i).toString());
+								if ((bpos[el_vert][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopW=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+										lastStopW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopW=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push(el_vert.toString() + (el_horz-i).toString());
+										lastStopW=true;
+									}
+								
+								
+								}
+							}
+						}
+							
+						
+						if(!(lastStopNE)){																											//NorthEast-ward
+							if((bpos[el_vert-i][el_horz+i])==0){
+								leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz+i).toString());
+								if ((bpos[el_vert-i][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopNE=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+										lastStopNE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopNE=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz+i).toString());
+										lastStopNE=true;
+									}
+								
+								
+								}
+							}
+						}	
+						
+						if(!(lastStopSE)){																											//SouthEast-ward
+							if((bpos[el_vert+i][el_horz+i])==0){
+								leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz+i).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz+i).toString());
+								if ((bpos[el_vert+i][el_horz+i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopSE=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+										lastStopSE=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopSE=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz+i).toString());
+										lastStopSE=true;
+									}
+								
+								
+								}
+							}
+						}
+					
+						if(!(lastStopSW)){																											//SouthWest-ward
+							if((bpos[el_vert+i][el_horz-i])==0){
+								leg_sqList.push((el_vert+i).toString()+(el_horz-i).toString());
+								cov_sqList.push((el_vert+i).toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push((el_vert+i).toString()+(el_horz-i).toString());
+								if ((bpos[el_vert+i][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopSW=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz-i).toString());
+										lastStopSW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopSW=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert+i).toString() + (el_horz-i).toString());
+										lastStopSW=true;
+									}
+								
+								
+								}
+							}
+						}
+						
+						if(!(lastStopNW)){																											//NorthWest-ward
+							if((bpos[el_vert-i][el_horz-i])==0){
+								leg_sqList.push((el_vert-i).toString()+(el_horz-i).toString());
+								cov_sqList.push((el_vert-i).toString()+(el_horz-i).toString());}
+							else{
+								cov_sqList.push((el_vert-i).toString()+(el_horz-i).toString());
+								if ((bpos[el_vert-i][el_horz-i]).indexOf('l')>0){																		
+									if (elmnt_color=='l')																							//White queen runs into one of its own pieces
+										lastStopNW=true;
+									else{																											//Black queen has option to take white piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz-i).toString());
+										lastStopNW=true;
+									}
+								}
+								else{
+									if (elmnt_color=='d')																							//Black queen runs into one of its own pieces
+										lastStopNW=true;
+									else{																											//White queen has option to take black piece
+										leg_sqList.push((el_vert-i).toString() + (el_horz-i).toString());
+										lastStopNW=true;
+									}
+								
+								
+								}
+							}
+						}
+					}
+					
+					//alert(leg_sqList);
+				}
+				
+				return [leg_sqList,cov_sqList];
+				}
+				
+				/*
+				else if (elmnt_type == "king"){
+				
+					if (elmnt_color=='l'){																										//WHITE KING
+				
+					
+					
+					}
+				  else{																															//BLACK KING
+				
+					
+					
+					}
+				}
+			var r_list=[[],[]];
+			r_list[0]=leg_sqList;
+			r_list[1]=cov_sqList;
+			return r_list;}*/
+	
+		    function convertNotation(list_i){
+			  var list_j =[];
+			  var a,b,a_j,b_j;
+			  var alph = "abcdefgh";
+			  for(var k=0;k<list_i.length;k++){
+				a = list_i[k][0];
+				b = list_i[k][1];				
+				a_j = parseFloat(b);
+				b_j = 8 - parseFloat(a);
+				list_j.push(alph[a_j] + b_j.toString());
+				}
+			  return list_j;
+			}
+	
+	</script>
+  </HEAD>
+
+  <BODY>
+	<!--<img src="ChessImgs/opsq.png" id="opimg">-->
+	<div class="cboard">
+	  <img src="ChessImgs/chessboard-js_1.png">
+	</div>
+	<div class="csquare">
+	  <div class="a1">
+		<div class="cpiece">
+		<input type="image" src="ChessImgs/Chess_rlt60.png" id="rook_l" loc="70" alt="Submit" onclick="piece_1click(this)">
+	    </div>
+	  </div>
+	  <div class="a2">
+		<div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="60" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="a3">
+	  </div>
+	  <div class="a4">
+	  </div>
+	  <div class="a5">
+	  </div>
+	  <div class="a6">
+	  </div>
+	  <div class="a7">
+		<div class="cpiece">
+		<input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="10" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="a8">
+		<div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_rdt60.png" id="rook_d"  loc="00" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="b1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_nlt60.png" id="knight_l" loc="71" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="b2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="61" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="b3">
+	  </div>
+	  <div class="b4">
+	  </div>
+	  <div class="b5">
+	  </div>
+	  <div class="b6">
+	  </div>
+	  <div class="b7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="11" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="b8">
+	  <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_ndt60.png" id="knight_d" loc="01" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="c1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_blt60.png" id="bishop_l" loc="72" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="c2">
+	    <div class="cpiece">
+	   <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="62" alt="Submit" onclick="piece_1click(this)">
+	   </div>
+	  </div>
+	  <div class="c3">
+	  </div>
+	  <div class="c4">
+	  </div>
+	  <div class="c5">
+	  </div>
+	  <div class="c6">
+	  </div>
+	  <div class="c7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="12" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="c8">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_bdt60.png" id="bishop_d" loc="02" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="d1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_qlt60.png" id="queen_l" loc="73" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="d2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="63" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="d3">
+	  </div>
+	  <div class="d4">
+	  </div>
+	  <div class="d5">
+	  </div>
+	  <div class="d6">
+	  </div>
+	  <div class="d7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="13" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="d8">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_qdt60.png" id="queen_d" loc="03" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="e1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_klt60.png" id="king_l" loc="74" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="e2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="64" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="e3" id="54">
+	  </div>
+	  <div class="e4" id="44">
+	  </div>
+	  <div class="e5">
+	  </div>
+	  <div class="e6">
+	  </div>
+	  <div class="e7">
+	    <div class="cpiece">
+		<input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="14" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="e8">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_kdt60.png" id="king_d" loc="04" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="f1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_blt60.png" id="bishop_l" loc="75" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="f2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="65" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="f3">
+	  </div>
+	  <div class="f4">
+	  </div>
+	  <div class="f5">
+	  </div>
+	  <div class="f6">
+	  </div>
+	  <div class="f7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="15" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="f8">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_bdt60.png" id="bishop_d" loc="05" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="g1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_nlt60.png" id="knight_l" loc="76" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="g2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="66" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="g3">
+	  </div>
+	  <div class="g4">
+	  </div>
+	  <div class="g5">
+	  </div>
+	  <div class="g6">
+	  </div>
+	  <div class="g7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="16" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="g8">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_ndt60.png" id="knight_d" loc="06" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="h1">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_rlt60.png" id="rook_l" loc="77" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="h2">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_plt60.png" id="pawn_l" loc="67" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="h3">
+	  </div>
+	  <div class="h4">
+	  </div>
+	  <div class="h5">
+	  </div>
+	  <div class="h6">
+	  </div>
+	  <div class="h7">
+	    <div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_pdt60.png" id="pawn_d" loc="17" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	  </div>
+	  <div class="h8">
+		<div class="cpiece">
+	    <input type="image" src="ChessImgs/Chess_rdt60.png" id="rook_d" loc="07" alt="Submit" onclick="piece_1click(this)">
+		</div>
+	</div>
+	<script type="text/javascript">
+	  var x = document.getElementsByClassName("cpiece");
+	  
+		
+	  function piece_1click(elmnt){
+		  if (numSldPcs==0){
+			elmnt.style.background = 'blue';
+			numSldPcs++; sld.push(elmnt);
+			  }
+		  else if (elmnt.style.background != 'blue') {
+		    sld[0].style.background = ''; sld=[];
+			elmnt.style.background = 'blue';
+			numSldPcs++; sld.push(elmnt);}
+		  else {
+		    elmnt.style.background = '';
+			numSldPcs--;}
+		
+		 
+		 var rList = legalSquares(elmnt);
+		 var t = convertNotation(rList[0]); 
+		 var u = convertNotation(rList[1]);
+		 
+		 alert("Legal squares: " + t);
+		  
+		 // var a=3;
+		 // var b=5;
+		 // document.write((a.toString()+(b-1).toString())=="34");
+		 
+		 //var g = document.getElementById("opimg");
+		 //var poop = document.getElementById("pip");
+		 
+		  
+		// for(var i=0; i<leg_sqList.length; i++){															//Add legal move squares to clicked piece's class list
+		//	g.classList.add(document.getElementById(leg_sqList[i]).classList);
+		// }
+		 //
+		 //document.write(g.classList.length);
+		 //var a;
+		 //for(var i=0; i<g.classList.length; i++){
+			//document.write(a+"<br>");
+		//	a = g.classList[i];
+		//	document.getElementsByClassName(a)[1].style.opacity = "0.5";
+		 //}
+
+		 
+		//var xoxo = document.getElementById("poop");
+		
+		 //document.write(elmnt.height + "<br>" + elmnt.width + "<br>");
+		  
+		  //
+		  
+		//for(var i=0; i<x.length; i++){
+		//	 x[i].style.background = 'red';}
+			
+			
+		}
+		  
+
+	  
+	</script>
+
+  </BODY>
+</HTML>

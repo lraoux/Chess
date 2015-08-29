@@ -1,0 +1,466 @@
+
+
+.cboard img {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+}
+
+.a1 {
+  position: absolute;
+  left: 15px;
+  top: 437px;
+  z-index: 1;}
+  
+.a2 {
+  position: absolute;
+  left: 15px;
+  top: 377px;
+  z-index: 1;}
+
+.a3 {
+  position: absolute;
+  left: 15px;
+  top: 316px;
+  z-index: 1;}
+
+.a4 {
+  position: absolute;
+  left: 15px;
+  top: 256px;
+  z-index: 1;}
+  
+.a5 {
+  position: absolute;
+  left: 15px;
+  top: 196px;
+  z-index: 1;}
+
+.a6 {
+  position: absolute;
+  left: 15px;
+  top: 135px;
+  z-index: 1;}
+
+.a7 {
+  position: absolute;
+  left: 15px;
+  top: 75px;
+  z-index: 1;}
+
+.a8 {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  z-index: 1;}
+  
+.b1 {
+  position: absolute;
+  left: 76px;
+  top: 437px;
+  z-index: 1;}
+  
+.b2 {
+  position: absolute;
+  left: 76px;
+  top: 377px;
+  z-index: 1;}
+
+.b3 {
+  position: absolute;
+  left: 76px;
+  top: 316px;
+  z-index: 1;}
+
+.b4 {
+  position: absolute;
+  left: 76px;
+  top: 256px;
+  z-index: 1;}
+  
+.b5 {
+  position: absolute;
+  left: 76px;
+  top: 196px;
+  z-index: 1;}
+
+.b6 {
+  position: absolute;
+  left: 76px;
+  top: 135px;
+  z-index: 1;}
+
+.b7 {
+  position: absolute;
+  left: 76px;
+  top: 75px;
+  z-index: 1;}
+
+.b8 {
+  position: absolute;
+  left: 76px;
+  top: 15px;
+  z-index: 1;}
+
+.c1 {
+  position: absolute;
+  left: 136px;
+  top: 437px;
+  z-index: 1;}
+  
+.c2 {
+  position: absolute;
+  left: 136px;
+  top: 377px;
+  z-index: 1;}
+
+.c3 {
+  position: absolute;
+  left: 136px;
+  top: 316px;
+  z-index: 1;}
+
+.c4 {
+  position: absolute;
+  left: 136px;
+  top: 256px;
+  z-index: 1;}
+  
+.c5 {
+  position: absolute;
+  left: 136px;
+  top: 196px;
+  z-index: 1;}
+
+.c6 {
+  position: absolute;
+  left: 136px;
+  top: 135px;
+  z-index: 1;}
+
+.c7 {
+  position: absolute;
+  left: 136px;
+  top: 75px;
+  z-index: 1;}
+
+.c8 {
+  position: absolute;
+  left: 136px;
+  top: 15px;
+  z-index: 1;}
+
+.d1 {
+  position: absolute;
+  left: 196px;
+  top: 437px;
+  z-index: 1;}
+  
+.d2 {
+  position: absolute;
+  left: 196px;
+  top: 377px;
+  z-index: 1;}
+
+.d3 {
+  position: absolute;
+  left: 196px;
+  top: 316px;
+  z-index: 1;}
+
+.d4 {
+  position: absolute;
+  left: 196px;
+  top: 256px;
+  z-index: 1;}
+  
+.d5 {
+  position: absolute;
+  left: 196px;
+  top: 196px;
+  z-index: 1;}
+
+.d6 {
+  position: absolute;
+  left: 196px;
+  top: 135px;
+  z-index: 1;}
+
+.d7 {
+  position: absolute;
+  left: 196px;
+  top: 75px;
+  z-index: 1;}
+
+.d8 {
+  position: absolute;
+  left: 196px;
+  top: 15px;
+  z-index: 1;}
+
+.e1 {
+  position: absolute;
+  left: 257px;
+  top: 437px;
+  z-index: 1;}
+  
+.e2 {
+  position: absolute;
+  left: 257px;
+  top: 377px;
+  z-index: 1;}
+
+.e3 {
+  position: absolute;
+  left: 257px;
+  top: 316px;
+  z-index: 1;}
+
+.e4 {
+  position: absolute;
+  left: 257px;
+  top: 256px;
+  z-index: 1;}
+  
+.e5 {
+  position: absolute;
+  left: 257px;
+  top: 196px;
+  z-index: 1;}
+
+.e6 {
+  position: absolute;
+  left: 257px;
+  top: 135px;
+  z-index: 1;}
+
+.e7 {
+  position: absolute;
+  left: 257px;
+  top: 75px;
+  z-index: 1;}
+
+.e8 {
+  position: absolute;
+  left: 257px;
+  top: 15px;
+  z-index: 1;}
+  
+.f1 {
+  position: absolute;
+  left: 317px;
+  top: 437px;
+  z-index: 1;}
+  
+.f2 {
+  position: absolute;
+  left: 317px;
+  top: 377px;
+  z-index: 1;}
+
+.f3 {
+  position: absolute;
+  left: 317px;
+  top: 316px;
+  z-index: 1;}
+
+.f4 {
+  position: absolute;
+  left: 317px;
+  top: 256px;
+  z-index: 1;}
+  
+.f5 {
+  position: absolute;
+  left: 317px;
+  top: 196px;
+  z-index: 1;}
+
+.f6 {
+  position: absolute;
+  left: 317px;
+  top: 135px;
+  z-index: 1;}
+
+.f7 {
+  position: absolute;
+  left: 317px;
+  top: 75px;
+  z-index: 1;}
+
+.f8 {
+  position: absolute;
+  left: 317px;
+  top: 15px;
+  z-index: 1;}
+  
+.g1 {
+  position: absolute;
+  left: 377px;
+  top: 437px;
+  z-index: 1;}
+  
+.g2 {
+  position: absolute;
+  left: 377px;
+  top: 377px;
+  z-index: 1;}
+
+.g3 {
+  position: absolute;
+  left: 377px;
+  top: 316px;
+  z-index: 1;}
+
+.g4 {
+  position: absolute;
+  left: 377px;
+  top: 256px;
+  z-index: 1;}
+  
+.g5 {
+  position: absolute;
+  left: 377px;
+  top: 196px;
+  z-index: 1;}
+
+.g6 {
+  position: absolute;
+  left: 377px;
+  top: 135px;
+  z-index: 1;}
+
+.g7 {
+  position: absolute;
+  left: 377px;
+  top: 75px;
+  z-index: 1;}
+
+.g8 {
+  position: absolute;
+  left: 377px;
+  top: 15px;
+  z-index: 1;}
+  
+.h1 {
+  position: absolute;
+  left: 437px;
+  top: 437px;
+  z-index: 1;}
+  
+.h2 {
+  position: absolute;
+  left: 437px;
+  top: 377px;
+  z-index: 1;}
+
+.h3 {
+  position: absolute;
+  left: 437px;
+  top: 316px;
+  z-index: 1;}
+
+.h4 {
+  position: absolute;
+  left: 437px;
+  top: 256px;
+  z-index: 1;}
+  
+.h5 {
+  position: absolute;
+  left: 437px;
+  top: 196px;
+  z-index: 1;}
+
+.h6 {
+  position: absolute;
+  left: 437px;
+  top: 135px;
+  z-index: 1;}
+
+.h7 {
+  position: absolute;
+  left: 437px;
+  top: 75px;
+  z-index: 1;}
+
+.h8 {
+  position: absolute;
+  left: 437px;
+  top: 15px;
+  z-index: 1;}
+  
+
+ #opimg {
+z-index: 3; 
+opacity: 1;}
+
+
+
+
+
+
+
+
+
+  
+.nav a {
+  color: #5a5a5a;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 14px 10px;
+  text-transform: uppercase;
+}
+
+.nav li {
+  display: inline;
+}
+
+.neighborhood-guides {
+    background-color:#efefef;
+    border-bottom: 1px solid #dbdbdb;}
+.neighborhood-guides h2 {
+    color:#393c3d;
+    font-size: 24px;}
+.neighborhood-guides p {
+    font-size: 15px;
+    margin-bottom: 13px;}
+
+.jumbotron {
+  background-image:url('http://goo.gl/04j7Nn');
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jumbotron .container {
+  position: absolute;
+  top:100px;
+}
+
+.jumbotron h1 {
+  color: #fff;
+  font-size: 48px;  
+  font-family: 'Shift', sans-serif;
+  font-weight: bold;
+}
+
+.jumbotron p {
+  font-size: 20px;
+  color: #fff;
+}
+
+.learn-more {
+  background-color: #f7f7f7;
+}
+
+.learn-more h3 {
+  font-family: 'Shift', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.learn-more a {
+  color: #00b0ff;
+}
